@@ -87,11 +87,26 @@ if fecha1 and fecha2:
 
         st.dataframe(resultado.head(50))
 
-        st.download_button(
-            "Descargar Excel",
-            resultado.to_csv(index=False),
-            file_name="comparativo_comisiones.csv"
-        )
+from io import BytesIO
+
+def generar_excel(df):
+
+    buffer = BytesIO()
+
+    with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="Comparativo")
+
+    return buffer.getvalue()
+
+
+excel_file = generar_excel(resultado)
+
+st.download_button(
+    label="📥 Descargar Excel",
+    data=excel_file,
+    file_name="comparativo_comisiones.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
 
 st.header("Dashboard histórico")
 
