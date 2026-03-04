@@ -104,7 +104,7 @@ excel_file = generar_excel(resultado)
 st.download_button(
     label="📥 Descargar Excel",
     data=excel_file,
-    file_name="comparativo_comisiones.xlsx",
+    file_name=f"Comparativo_{fecha1.strftime('%d%b')}_{fecha2.strftime('%d%b')}.xlsx"
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
 
